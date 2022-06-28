@@ -7,7 +7,8 @@ public class Equipo
     //Atributos
     private String nombreEquipo;
     private int numJugadores;
-    private Jugador[] jugadores;
+    private Jugador[] jugadoresPrincipales;
+    private Jugador[] jugadoresSuplentes;
     private String nGoleador;
     private int golesGoleador;
     private int edadesProm;
@@ -16,15 +17,15 @@ public class Equipo
     public Equipo(String nom, int n)
     {
         nombreEquipo = nom;
-        numJugadores = n;
-        jugadores = new Jugador[n];
+        jugadoresPrincipales = new Jugador[11];
+        jugadoresSuplentes = new Jugador[11];
     }
 
     public void cargar()
     {
         for(int i=0; i< numJugadores;i++)
         {
-            jugadores[i] = crearJugador("",0,0,"");
+            jugadoresPrincipales[i] = crearJugador("",0,0,"");
         }
     }
 
@@ -41,27 +42,32 @@ public class Equipo
         return new Jugador(nom, goles, edad, posicion);
     }
 
-    public int calcularTotalGoles()
+    /*public int calcularTotalGoles()
     {
         int totalGolesEquipo = 0;
         for(int i=0; i<numJugadores; i++)
         {
-            totalGolesEquipo += jugadores[i].getGoles();
-            if(jugadores[i].getGoles() > golesGoleador)
+            totalGolesEquipo += jugadoresPrincipales[i].getGoles();
+            if(jugadoresPrincipales[i].getGoles() > golesGoleador)
             {
-                golesGoleador = jugadores[i].getGoles();
-                nGoleador = jugadores[i].getNombre();
+                golesGoleador = jugadoresPrincipales[i].getGoles();
+                nGoleador = jugadoresPrincipales[i].getNombre();
             }
         }
         return totalGolesEquipo;
-    }
+    }*/
     public int calcularMayorGoles()
     {
         for(int i=0; i<numJugadores; i++)
         {
-            if(jugadores[i].getGoles() > golesGoleador)
+            if(jugadoresPrincipales[i].getGoles() > golesGoleador)
             {
-                golesGoleador = jugadores[i].getGoles();
+                golesGoleador = jugadoresPrincipales[i].getGoles();
+
+            }
+            if(jugadoresSuplentes[i].getGoles() > golesGoleador)
+            {
+                golesGoleador = jugadoresSuplentes[i].getGoles();
 
             }
             //if(jugadores[i].getCodigo() ==21)
@@ -77,10 +83,10 @@ public class Equipo
     {
         for(int i=0; i<numJugadores; i++)
         {
-            if(jugadores[i].getGoles() > golesGoleador)
+            if(jugadoresPrincipales[i].getGoles() > golesGoleador)
             {
-                golesGoleador = jugadores[i].getGoles();
-                nGoleador = jugadores[i].getNombre();
+                golesGoleador = jugadoresPrincipales[i].getGoles();
+                nGoleador = jugadoresPrincipales[i].getNombre();
             }
         }
         return nGoleador;
@@ -89,7 +95,7 @@ public class Equipo
     {
         for(int i=0; i<numJugadores; i++)
         {     
-            edadesProm += jugadores[i].getEdad();
+            edadesProm += jugadoresPrincipales[i].getEdad();
         }
         edadesProm= edadesProm/numJugadores;
         return edadesProm;
@@ -113,9 +119,5 @@ public class Equipo
         return edadesProm;
     }
 
-    public String toString()
-    {
-        return nombreEquipo + "\nCantidad de jugadores " + numJugadores + " \nEdad promedio del equipo " + edadesProm;
-    }
 
 }
